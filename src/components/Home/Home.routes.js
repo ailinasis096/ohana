@@ -1,4 +1,3 @@
-import React from 'react';
 import EventsList from '../EventsList/index';
 
 const HOME_ROUTES = [

@@ -19,7 +19,10 @@ const theme = createTheme({
       text: '#FFF', //white
      },
      secondary: {
-      main: 'rgba(84, 101, 209, 0.4)', //lightViolet
+      main: '#B66C8C', //rose
+     },
+     default: {
+       main: '#8568AE',
      }
   },
   /** Typographys **/

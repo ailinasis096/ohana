@@ -1,18 +1,23 @@
 
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import MenuList from '@material-ui/core/MenuList';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Button from '@material-ui/core/Button';
-import logo from './../../assets/logo.png';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import logo3 from '../../assets/logo3.png';
+import { FormControl, Input, InputAdornment, OutlinedInput, TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -36,50 +41,57 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-      backgroundColor: "#8568AE",
+    backgroundColor: "#8568AE",
   },
-  logo: {
-    width: '50%',
-    height: '50px',
-    backgroundImage: `url(${logo})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    backgroundSize: "cover",
-    backgroundAttachment: "fixed",
-  },
+  search: {
+    width: 160,
+  }
 }));
 
 const Navbar = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleToggle = () => {
+    setOpen(!open);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
   };
 
-  const menuId = 'primary-search-account-menu';
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
+    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+      {({ TransitionProps, placement }) => (
+        <Grow
+          {...TransitionProps}
+          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+        >
+        <Paper>
+          <ClickAwayListener onClickAway={handleClose}>
+            <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+              <MenuItem onClick={handleClose}>Mi perfil</MenuItem>
+              <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+            </MenuList>
+          </ClickAwayListener>
+        </Paper>
+        </Grow>
+      )}
+    </Popper>
   );
 
-  /*<Button className={classes.logo} />*/
   return (
     <div className={classes.grow}>
       <AppBar 
@@ -96,15 +108,26 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
 
-          <Button>
-            <Typography className={classes.title} variant="h6" noWrap>
-              OHANA
-            </Typography>
-          </Button>
-
+          <ButtonBase
+            focusRipple
+            key={'logo'}
+            className={classes.logo}
+            focusVisibleClassName={classes.focusVisible}
+          >
+            <img alt='logo' src={logo3}></img>
+          </ButtonBase>
           
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <FormControl size='small' color='secondary' className={classes.search} variant="outlined"> 
+              <OutlinedInput
+                size='small'
+                //value={values.weight}
+                //onChange={handleChange('weight')}
+                placeholder='Buscar'
+                startAdornment={<InputAdornment><SearchIcon/></InputAdornment>}
+              />
+            </FormControl>
             <IconButton aria-label="show 4 new notifications" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -112,10 +135,10 @@ const Navbar = () => {
             </IconButton>
             <IconButton
               edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
+              ref={anchorRef}
+              aria-controls={open ? 'menu-list-grow' : undefined}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={handleToggle}
               color="inherit"
             >
               <AccountCircle />

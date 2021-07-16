@@ -1,67 +1,51 @@
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import Tooltip from '@material-ui/core/Tooltip';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Pagination from '@material-ui/lab/Pagination';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
-import Box from '@material-ui/core/Box';
+import { makeStyles} from '@material-ui/core/styles';
+import {Pagination} from '@material-ui/lab';
+import SearchIcon from '@material-ui/icons/Search'
+import PetsIcon from '@material-ui/icons/Pets'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
+import ShareIcon from '@material-ui/icons/Share'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import PeopleIcon from '@material-ui/icons/People'
+import SpaIcon from '@material-ui/icons/Spa'
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import {Chip, Box, InputAdornment, OutlinedInput, InputLabel, FormControl, 
+  Paper, Grid, Tooltip, Button, Typography, IconButton, CardActions, CardContent,
+  CardMedia, CardHeader, Card} from '@material-ui/core';
+  
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 200,
-    maxHeight: 500,
+    width: '100%',
+    height: 'auto',
     borderRadius: 5,
   },
   media: {
-    height: '60%',
-    width: '60%',
-    marginLeft: 40,
+    height: '100%',
+    width: 'auto',
     paddingTop: '56.25%', // 16:9
   },
-  grid: {
-    marginRight: 20
-  },
   gridItem: {
-    marginTop: 20,
-    borderStyle: 'solid',
-    borderWidth: 'thin',
-    borderColor: theme.palette.primary.main,
+    marginRight: 20,
     borderRadius: 5
   },
-  divButton: {
+  divHeader: {
     justifyContent: 'center',
     display: 'flex',
     marginTop: 20
   },
   button: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.rose,
     fontWeight: 'bold'
   },
   description: {
     display: 'box',
-    lineClamp: 8,
+    lineClamp: 4,
     boxOrient: 'vertical',  
     overflow: 'hidden',
   },
   cardTitle: {
+    color: theme.palette.primary.rose,
     display: 'box',
     lineClamp: 1,
     boxOrient: 'vertical',  
@@ -69,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     marginTop: 20,
-    marginBottom: 50,
-    width: 900,
+    marginBottom: 70,
+    width: 600,
   },
   divPagination: {
     justifyContent: 'center',
@@ -78,6 +62,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 80,
     marginBottom: 50,
   },
+  chips: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 50,
+  },
+  chip: {
+    marginRight: 40,
+    height: 40,
+    width: 150,
+  }
 }));
 
 const events = [
@@ -87,6 +81,7 @@ const events = [
         contact: '2994092178',
         location: 'Plottier, Neuquén',
         type: 'Monetaria',
+        category: 'Animal',
         description: 'Volver a jugar es una organización civil, sin ánimo de lucro, que opera gracias al aporte económico de personas como vos, que creen en el trabajo social y en la Solidaridad.'+ 
         'Tu donación por más chica que pueda parecer  nos permite brindarle ayuda humanitaria  a las diversas familias  y a merenderos del Barrio Las Tunas, Gral Pacheco.' +
         'Estamos convencidos que entre todos podemos ayudarlos a afrontar esta pandemia.'+        
@@ -101,6 +96,7 @@ const events = [
         contact: '3514893256',
         location: 'Córdoba, Córdoba',
         type: 'Monetaria',
+        category: 'Salud',
         description: 'Coincidiendo con el Día Mundial del Alzheimer, la Fundación ACE pone en marcha Regala Memoria, campaña para sensibilizar a la ciudadanía sobre la necesidad de obtener recursos destinados a la investigación para luchar contra la enfermedad, considerada por la Organización Mundial de la Salud (OMS) como una "pandemia sociosanitaria".',
         end_date: '23/12/2021',
         init_date: '01/01/2021',
@@ -112,6 +108,7 @@ const events = [
       contact: '3514893256',
       location: 'Córdoba, Córdoba',
       type: 'Monetaria',
+      category: 'ONG',
       description: 'Coincidiendo con el Día Mundial del Alzheimer, la Fundación ACE pone en marcha Regala Memoria, campaña para sensibilizar a la ciudadanía sobre la necesidad de obtener recursos destinados a la investigación para luchar contra la enfermedad, considerada por la Organización Mundial de la Salud (OMS) como una "pandemia sociosanitaria".',
       end_date: '23/12/2021',
       init_date: '01/01/2021',
@@ -123,6 +120,7 @@ const events = [
       contact: '2994092178',
       location: 'Plottier, Neuquén',
       type: 'Monetaria',
+      category: 'Medio Ambiente',
       description: 'Volver a jugar es una organización civil, sin ánimo de lucro, que opera gracias al aporte económico de personas como vos, que creen en el trabajo social y en la Solidaridad.'+ 
       'Tu donación por más chica que pueda parecer  nos permite brindarle ayuda humanitaria  a las diversas familias  y a merenderos del Barrio Las Tunas, Gral Pacheco.' +
       'Estamos convencidos que entre todos podemos ayudarlos a afrontar esta pandemia.'+        
@@ -137,6 +135,7 @@ const events = [
       contact: '3514893256',
       location: 'Córdoba, Córdoba',
       type: 'Monetaria',
+      category: 'Otros',
       description: 'Coincidiendo con el Día Mundial del Alzheimer, la Fundación ACE pone en marcha Regala Memoria, campaña para sensibilizar a la ciudadanía sobre la necesidad de obtener recursos destinados a la investigación para luchar contra la enfermedad, considerada por la Organización Mundial de la Salud (OMS) como una "pandemia sociosanitaria".',
       end_date: '23/12/2021',
       init_date: '01/01/2021',
@@ -144,56 +143,104 @@ const events = [
     }
 ]
 
+const filters = [
+  {
+    id: 1,
+    name: 'Animales',
+    icon: <PetsIcon/>
+  },
+  { id: 2,
+    name: 'ONGs',
+    icon: <PeopleIcon/>
+  },
+  {
+    id: 3,
+    name: 'Medio Ambiente',
+    icon: <SpaIcon/>
+  },
+  { id: 4,
+    name: 'Salud',
+    icon: <AccessibilityNewIcon/>
+  },
+  { id: 5,
+    name: 'Otros',
+    icon: <FavoriteIcon/>
+  }
+]
+
 const EventsList = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
+  const [selectedFilter, setSelectedFilter] = useState(5);
+  //const [events, setEvents] = useState([]);
 
   const handlePage = (event, value) => {
     setPage(value);
   };
 
+  const handleChange = (value) => {
+    setSelectedFilter(value)
+  }
+
   return (
         <div className="EventsContainer">
-          
-          <div className={classes.divButton}>
-            <Typography variant="h5"  color="primary">
+          <div className={classes.divHeader}>
+            <Typography variant="h5"  color="secondary">
               <Box fontWeight='fontWeightBold'>
-                Listado de Campañas
+                Explora campañas
               </Box>
             </Typography>
           </div>
 
-          <div className={classes.divButton}>
+          <div className={classes.divHeader}>
             <FormControl className={classes.search} variant="outlined"> 
-              <InputLabel htmlFor="outlined-adornment-amount">Buscar</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-amount" color='secondary'>Buscar</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-search"
                 //value={values.amount}
                 //onChange={handleChange('amount')}
-                startAdornment={<InputAdornment position="start"> <SearchIcon color='primary'/></InputAdornment>}
+                color='secondary'
+                startAdornment={<InputAdornment position="start"> <SearchIcon color='secondary'/></InputAdornment>}
                 labelWidth={60}
               />
             </FormControl>
           </div>
+          
+          <Paper elevation={0} className={classes.chips}>
+            {filters.map((filter) => (
+              <Chip
+              className={classes.chip}
+              icon={filter.icon}
+              label={filter.name}
+              onClick={ () => handleChange(filter.id) }
+              color={(filter.id === selectedFilter ? 'secondary' : 'default')}
+              variant="outlined"
+            />
+            ))}
+          </Paper> 
 
-          <Grid container justifyContent="center">
+          <Grid container justifyContent="center" spacing={3}> 
             {events.map((event) => (
-            <div className={classes.grid}>
-              <Grid key={event.id} item className={classes.gridItem} >
+              <Grid key={event.id} item xs={3} className={classes.gridItem} >
                 <Paper elevation={5}> 
                   <Card className={classes.root} variant="outlined">
                     <CardHeader
                         title={
                           <Tooltip title={event.name}>
-                          <Typography className={classes.cardTitle} variant="h6" color="primary">
+                          <Typography className={classes.cardTitle} variant="h6">
                             <Box fontWeight='fontWeightBold'>
                               {event.name}
                             </Box>
                           </Typography></Tooltip>
                         }
+                        action={
+                          <IconButton aria-label="settings">
+                            <ShareIcon />
+                          </IconButton>
+                        }
                         subheader={
                           <Typography noWrap variant="caption" component="p">
-                            {'Finaliza: '+ event.end_date}
+                            {event.category}
                           </Typography>
                         }
                     />
@@ -208,25 +255,15 @@ const EventsList = () => {
                         </Typography>
                     </CardContent>
                     <CardActions disableSpacing>
-                        <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                        </IconButton>
-                        <IconButton aria-label="share">
-                        <ShareIcon />
-                        </IconButton>
+                      <Button className={classes.button}
+                        endIcon={<ArrowForwardIcon />}
+                        >
+                        Conoce más
+                      </Button>
                     </CardActions>
                   </Card>
                 </Paper>
               </Grid>
-              <div className={classes.divButton}>
-                <Button className={classes.button}
-                  variant="contained" 
-                  endIcon={<ArrowForwardIcon />}
-                  >
-                  Conoce más
-                </Button>
-              </div>
-            </div>
             ))}
           </Grid>
 
