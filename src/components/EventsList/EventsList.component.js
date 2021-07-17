@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
-import { makeStyles} from '@material-ui/core/styles';
-import {Pagination} from '@material-ui/lab';
-import SearchIcon from '@material-ui/icons/Search'
-import PetsIcon from '@material-ui/icons/Pets'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import ShareIcon from '@material-ui/icons/Share'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import PeopleIcon from '@material-ui/icons/People'
-import SpaIcon from '@material-ui/icons/Spa'
+import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Tooltip, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import {Chip, Box, InputAdornment, OutlinedInput, InputLabel, FormControl, 
-  Paper, Grid, Tooltip, Button, Typography, IconButton, CardActions, CardContent,
-  CardMedia, CardHeader, Card} from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import PeopleIcon from '@material-ui/icons/People';
+import PetsIcon from '@material-ui/icons/Pets';
+import SearchIcon from '@material-ui/icons/Search';
+import ShareIcon from '@material-ui/icons/Share';
+import SpaIcon from '@material-ui/icons/Spa';
+import { Pagination } from '@material-ui/lab';
+import React, { useState } from 'react';
   
 
 const useStyles = makeStyles((theme) => ({
