@@ -1,4 +1,5 @@
 import EventsList from '../EventsList/index';
+import EventsRegister from '../EventsRegister/index';
 
 const HOME_ROUTES = [
   {
@@ -7,6 +8,11 @@ const HOME_ROUTES = [
     component: EventsList,
     //sidebarHref: '/promotions',
     href: '/events/list',
+  },
+  {
+    label: 'EventsRegister',
+    component: EventsRegister,
+    href: '/events/create'
   }
 ];
 
