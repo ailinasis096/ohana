@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import EventDetail from './EventDetail.component'
+import './EventDetail.css'
 
-import './EventDetail.css';
-import EventDetail from './EventDetail.component';
-import API from '../../../api/Api'
+//import API from '../../../api/Api'
 
 const EventDetailContainer = () => {
   const [event, setEvent] = useState([])
@@ -21,11 +21,7 @@ const EventDetailContainer = () => {
     fetchEvent();*/
   }, [])
 
-  return (
-    <EventDetail
-      event={event}
-    />
-  );
-};
+  return <EventDetail event={event} />
+}
 
-export default EventDetailContainer;
+export default EventDetailContainer
